@@ -1,5 +1,10 @@
-import { View } from 'react-native'
+import LayoutBase from '@/features/shared/components/LayoutBase'
+import { Text } from 'react-native'
 
 export default function FavoriteScreen() {
-	return <View>Favorite page</View>
+	return (
+		<LayoutBase>
+			<Text>Favorite</Text>
+		</LayoutBase>
+	)
 }

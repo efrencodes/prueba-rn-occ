@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons'
 import { Tabs } from 'expo-router'
 import React from 'react'
 
@@ -9,9 +10,12 @@ export default function TabLayout() {
 				options={{
 					headerTitleAllowFontScaling: false,
 					tabBarAllowFontScaling: false,
-					title: 'Inicio',
+					title: 'Home',
 					headerTitleAlign: 'left',
 					animation: 'fade',
+					tabBarIcon: ({ color }) => (
+						<Ionicons name="home" size={24} color={color} />
+					),
 				}}
 			/>
 			<Tabs.Screen
@@ -19,9 +23,12 @@ export default function TabLayout() {
 				options={{
 					headerTitleAllowFontScaling: false,
 					tabBarAllowFontScaling: false,
-					title: 'Favoritos',
+					title: 'Favorites',
 					headerTitleAlign: 'left',
 					animation: 'fade',
+					tabBarIcon: ({ color }) => (
+						<Ionicons name="heart" size={24} color={color} />
+					),
 				}}
 			/>
 		</Tabs>
