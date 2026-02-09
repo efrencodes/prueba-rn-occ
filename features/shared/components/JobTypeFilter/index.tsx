@@ -141,7 +141,6 @@ const styles = StyleSheet.create({
 		letterSpacing: 0.5,
 	},
 	scrollContent: {
-		paddingHorizontal: 16,
 		gap: 8,
 	},
 	chip: {

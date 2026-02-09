@@ -116,7 +116,6 @@ const styles = StyleSheet.create({
 		color: Colors.light.tint,
 	},
 	scrollContent: {
-		paddingHorizontal: 16,
 		gap: 8,
 	},
 	chip: {
@@ -129,7 +128,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#f5f5f5',
 		borderWidth: 1.5,
 		borderColor: '#e0e0e0',
-		maxWidth: 200, // Previene overflow en nombres largos
+		maxWidth: 200,
 		shadowColor: '#000',
 		shadowOffset: { width: 0, height: 1 },
 		shadowOpacity: 0.05,
@@ -144,14 +143,11 @@ const styles = StyleSheet.create({
 		opacity: 0.7,
 		transform: [{ scale: 0.97 }],
 	},
-	emoji: {
-		fontSize: 16,
-	},
 	chipText: {
 		fontSize: 13,
 		fontWeight: '600',
 		color: '#666',
-		flexShrink: 1, // Permite que el texto se ajuste
+		flexShrink: 1,
 	},
 	chipTextSelected: {
 		color: '#fff',

@@ -2,12 +2,12 @@ import Colors from '@/constants/Colors'
 import { DetailJob } from '@/features/jobs/type'
 import { formatDate } from '@/features/jobs/utils/date'
 import { Ionicons } from '@expo/vector-icons'
-import { useRouter } from 'expo-router'
 import {
 	Image,
 	Linking,
 	Platform,
 	Pressable,
+	SafeAreaView,
 	ScrollView,
 	Share,
 	StyleSheet,
@@ -16,7 +16,6 @@ import {
 	View,
 } from 'react-native'
 import RenderHTML from 'react-native-render-html'
-import { SafeAreaView } from 'react-native-safe-area-context'
 
 interface JobDetailProps {
 	job: DetailJob
@@ -29,7 +28,6 @@ export default function JobDetail({
 	isFavorite,
 	onToggleFavorite,
 }: JobDetailProps) {
-	const router = useRouter()
 	const { width } = useWindowDimensions()
 
 	const handleApply = async () => {
@@ -94,7 +92,7 @@ export default function JobDetail({
 	}
 
 	return (
-		<SafeAreaView style={styles.container} edges={['bottom']}>
+		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<View style={styles.header}>
 					<Pressable
@@ -267,10 +265,8 @@ export default function JobDetail({
 					]}
 					onPress={handleApply}
 					accessibilityRole="button"
-					accessibilityLabel="Apply to job"
 				>
 					<Text style={styles.primaryButtonText}>Apply Now</Text>
-					<Ionicons name="open-outline" size={20} color="#fff" />
 				</Pressable>
 			</View>
 		</SafeAreaView>
@@ -407,7 +403,6 @@ const styles = StyleSheet.create({
 		gap: 12,
 		borderTopWidth: 1,
 		borderTopColor: '#f0f0f0',
-		// Shadow for elevation effect
 		shadowColor: '#000',
 		shadowOffset: { width: 0, height: -2 },
 		shadowOpacity: 0.1,
