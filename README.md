@@ -4,9 +4,8 @@ Aplicacion mobile para buscar trabajos remotos usando la API de Remotive.
 
 ## Demo
 
-<img src="docs/homescreen.png" alt="HomeScreen" width="500" height="250">
+<img src="docs/homescreen.png" alt="HomeScreen" width="300" height="450">
 
-![Home Screen](docs/homescreen.png)
 
 ## Tech Stack
 
