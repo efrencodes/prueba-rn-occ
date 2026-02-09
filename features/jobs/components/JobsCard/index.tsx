@@ -37,8 +37,6 @@ export default function JobsCard({
 				pressed && styles.cardPressed,
 			]}
 			accessibilityRole="button"
-			accessibilityLabel={`${job.title} at ${job.company_name}`}
-			accessibilityHint="Double tap to view job details"
 		>
 			<View style={styles.container}>
 				<View style={styles.logoContainer}>
@@ -74,11 +72,6 @@ export default function JobsCard({
 								onPress={handleFavoritePress}
 								hitSlop={8}
 								accessibilityRole="button"
-								accessibilityLabel={
-									isFavorite
-										? 'Remove from favorites'
-										: 'Add to favorites'
-								}
 							>
 								<Ionicons
 									name={
@@ -155,8 +148,7 @@ const styles = StyleSheet.create({
 	card: {
 		backgroundColor: '#fff',
 		borderRadius: 12,
-		marginHorizontal: 16,
-		marginVertical: 8,
+		marginVertical: 10,
 		shadowColor: '#000',
 		shadowOffset: { width: 0, height: 2 },
 		shadowOpacity: 0.1,

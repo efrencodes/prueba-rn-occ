@@ -1,4 +1,4 @@
-import { ScrollView } from 'react-native'
+import { Platform, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 interface LayoutBaseProps {
@@ -8,7 +8,11 @@ interface LayoutBaseProps {
 export default function LayoutBase({ children }: LayoutBaseProps) {
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
-			<ScrollView>{children}</ScrollView>
+			<ScrollView
+				style={{ flex: 1, padding: Platform.OS === 'ios' ? 20 : 16 }}
+			>
+				{children}
+			</ScrollView>
 		</SafeAreaView>
 	)
 }
