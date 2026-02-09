@@ -7,7 +7,7 @@ import { DetailJob, JobType } from '@/features/jobs/type'
 import EmptyState from '@/features/shared/components/EmptyState'
 import JobTypeFilter from '@/features/shared/components/JobTypeFilter'
 import SearchBar from '@/features/shared/components/Searchbar'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
 	ActivityIndicator,
 	FlatList,
@@ -24,9 +24,40 @@ export default function HomeScreen() {
 	const [refreshing, setRefreshing] = useState<boolean>(false)
 	const [loading, setLoading] = useState<boolean>(true)
 	const { setFavorite } = useFavoriteStore()
-	const { jobs, setJob, setCategories, toggleFavorite } = useJobStore()
+	const { jobs, categories, setJob, setCategories, toggleFavorite } =
+		useJobStore()
 
-	const getJobList = async (searchTerm?: string) => {
+	const filteredJobs = useMemo(() => {
+		let result = jobs
+
+		if (search.trim()) {
+			const searchLower = search.toLowerCase().trim()
+			result = result.filter(
+				(job) =>
+					job.title.toLowerCase().includes(searchLower) ||
+					job.company_name.toLowerCase().includes(searchLower),
+			)
+		}
+
+		if (category) {
+			const selectedCategoryName = categories.find(
+				(c) => c.slug === category,
+			)?.name
+			if (selectedCategoryName) {
+				result = result.filter(
+					(job) => job.category === selectedCategoryName,
+				)
+			}
+		}
+
+		if (selectedJobType) {
+			result = result.filter((job) => job.job_type === selectedJobType)
+		}
+
+		return result
+	}, [jobs, search, category, categories, selectedJobType])
+
+	const getJobList = async () => {
 		try {
 			setLoading(true)
 			const responseJobs = await jobsAPI.getJobs()
@@ -49,10 +80,6 @@ export default function HomeScreen() {
 	useEffect(() => {
 		getJobList()
 	}, [])
-
-	useEffect(() => {
-		getJobList()
-	}, [category])
 
 	const onHandleFavorite = (job: DetailJob) => {
 		const newJob = { ...job, isFavorite: !job.isFavorite }
@@ -91,7 +118,7 @@ export default function HomeScreen() {
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
 			<FlatList
-				data={jobs}
+				data={filteredJobs}
 				renderItem={({ item }) => (
 					<JobsCard
 						job={item}
