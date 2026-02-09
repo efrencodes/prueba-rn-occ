@@ -18,6 +18,7 @@ export interface DetailJob {
 	candidate_required_location: string
 	salary?: string
 	description: string
+	isFavorite: boolean
 }
 
 export interface RemoteJobsApiResponse {
