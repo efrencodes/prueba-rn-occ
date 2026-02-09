@@ -53,12 +53,13 @@ function RootLayoutNav() {
 			<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 			<Stack.Screen
 				name="detail/[id]"
-				options={{
-					title: 'Job detail',
+				options={({ route }) => ({
+					// @ts-ignore
+					title: route.params.name,
 					animation: 'fade',
 					headerBackTitle: Platform.OS === 'ios' ? 'Atrás' : '',
 					headerShadowVisible: false,
-				}}
+				})}
 			/>
 		</Stack>
 	)
