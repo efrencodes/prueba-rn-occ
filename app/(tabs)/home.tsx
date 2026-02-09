@@ -8,24 +8,35 @@ import EmptyState from '@/features/shared/components/EmptyState'
 import JobTypeFilter from '@/features/shared/components/JobTypeFilter'
 import SearchBar from '@/features/shared/components/Searchbar'
 import { useEffect, useState } from 'react'
-import { FlatList, Platform, RefreshControl, SafeAreaView, View } from 'react-native'
+import {
+	ActivityIndicator,
+	FlatList,
+	Platform,
+	RefreshControl,
+	SafeAreaView,
+	View,
+} from 'react-native'
 
 export default function HomeScreen() {
 	const [selectedJobType, setSelectedJobType] = useState<JobType | null>(null)
 	const [category, setCategory] = useState<string | null>(null)
 	const [search, setSearch] = useState<string>('')
 	const [refreshing, setRefreshing] = useState<boolean>(false)
+	const [loading, setLoading] = useState<boolean>(true)
 	const { setFavorite } = useFavoriteStore()
 	const { jobs, setJob, setCategories, toggleFavorite } = useJobStore()
 
 	const getJobList = async (searchTerm?: string) => {
 		try {
+			setLoading(true)
 			const responseJobs = await jobsAPI.getJobs()
 			const responseCategories = await jobsAPI.getCategories()
 			setJob(responseJobs.data.jobs)
 			setCategories(responseCategories.data.jobs)
 		} catch (error) {
 			return
+		} finally {
+			setLoading(false)
 		}
 	}
 
@@ -36,8 +47,12 @@ export default function HomeScreen() {
 	}
 
 	useEffect(() => {
-		getJobList(search)
-	}, [search])
+		getJobList()
+	}, [])
+
+	useEffect(() => {
+		getJobList()
+	}, [category])
 
 	const onHandleFavorite = (job: DetailJob) => {
 		const newJob = { ...job, isFavorite: !job.isFavorite }
@@ -58,6 +73,20 @@ export default function HomeScreen() {
 			/>
 		</View>
 	)
+
+	if (loading && jobs.length === 0) {
+		return (
+			<SafeAreaView
+				style={{
+					flex: 1,
+					justifyContent: 'center',
+					alignItems: 'center',
+				}}
+			>
+				<ActivityIndicator size="large" />
+			</SafeAreaView>
+		)
+	}
 
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
@@ -80,7 +109,10 @@ export default function HomeScreen() {
 					/>
 				}
 				refreshControl={
-					<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+					<RefreshControl
+						refreshing={refreshing}
+						onRefresh={onRefresh}
+					/>
 				}
 				contentContainerStyle={{
 					padding: Platform.OS === 'ios' ? 20 : 16,
