@@ -1,6 +1,7 @@
 import Colors from '@/constants/Colors'
 import { DetailJob } from '@/features/jobs/type'
 import { formatDate } from '@/features/jobs/utils/date'
+import { htmlStyles } from '@/features/jobs/utils/stylesHtml'
 import { Ionicons } from '@expo/vector-icons'
 import {
 	Image,
@@ -48,47 +49,25 @@ export default function JobDetail({
 			const message = `Check out this job: ${job.title} at ${job.company_name}`
 			const result = await Share.share(
 				{
-					message: `${message}\n\n${job.url}`,
-					url: job.url, // iOS only - shows preview
-					title: job.title, // Android only
+					message: `${message} ${job.url}`,
+					url: job.url,
+					title: job.title,
 				},
 				{
-					// iOS only - dialog title
 					dialogTitle: 'Share Job',
 				},
 			)
 
-			// Handle result (optional)
 			if (result.action === Share.sharedAction) {
-				if (result.activityType) {
-					// Shared via specific activity (iOS)
+				if (result.activityType)
 					console.log('Shared with:', result.activityType)
-				} else {
-					// Shared (Android)
-					console.log('Job shared successfully')
-				}
+				else console.log('Job shared successfully')
 			} else if (result.action === Share.dismissedAction) {
-				// User dismissed share sheet
 				console.log('Share dismissed')
 			}
 		} catch (error) {
 			console.error('Error sharing:', error)
 		}
-	}
-
-	const htmlStyles = {
-		body: {
-			color: '#333',
-			fontSize: 15,
-			lineHeight: 24,
-		},
-		h1: { fontSize: 24, fontWeight: '700', marginVertical: 12 },
-		h2: { fontSize: 20, fontWeight: '600', marginVertical: 10 },
-		h3: { fontSize: 18, fontWeight: '600', marginVertical: 8 },
-		p: { marginVertical: 8 },
-		ul: { marginVertical: 8 },
-		li: { marginVertical: 4 },
-		a: { color: Colors.light.tint, textDecorationLine: 'underline' },
 	}
 
 	return (
