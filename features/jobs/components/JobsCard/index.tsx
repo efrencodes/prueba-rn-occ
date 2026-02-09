@@ -20,7 +20,7 @@ export default function JobsCard({
 	const handlePress = () => {
 		router.push({
 			pathname: ROUTES_APP.DETAIL_JOB as RelativePathString,
-			params: { id: String(job.id) },
+			params: { id: String(job.id), name: job.title },
 		})
 	}
 
