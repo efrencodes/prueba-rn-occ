@@ -28,9 +28,9 @@ export default function FavoriteScreen() {
 
 			{Array.isArray(favorites) && favorites.length === 0 && (
 				<EmptyState
-					icon="search-outline"
-					title="No jobs found"
-					message="Try adjusting your filters"
+					icon="alert-circle"
+					title="No favorite jobs added"
+					message=""
 				/>
 			)}
 		</LayoutBase>
