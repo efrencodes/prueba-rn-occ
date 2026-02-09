@@ -7,6 +7,7 @@ export interface CardState {
 	categories: Category[]
 	setCategories: (categories: Category[]) => void
 	setJob: (jobs: DetailJob[]) => void
+	toggleFavorite: (jobId: number) => void
 	resetJob: () => void
 }
 
@@ -18,6 +19,14 @@ const useJobStore = create<CardState>((set, get) => ({
 		set((_) => {
 			return { jobs: addIsFavorite(jobs) }
 		}),
+	toggleFavorite: (jobId: number) =>
+		set((state) => ({
+			jobs: state.jobs.map((job) =>
+				job.id === jobId
+					? { ...job, isFavorite: !job.isFavorite }
+					: job,
+			),
+		})),
 	resetJob: () => set({ jobs: [] }),
 }))
 

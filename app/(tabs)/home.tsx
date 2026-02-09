@@ -16,7 +16,7 @@ export default function HomeScreen() {
 	const [search, setSearch] = useState<string>('')
 	const [refreshing, setRefreshing] = useState<boolean>(false)
 	const { setFavorite } = useFavoriteStore()
-	const { jobs, setJob, setCategories } = useJobStore()
+	const { jobs, setJob, setCategories, toggleFavorite } = useJobStore()
 
 	const getJobList = async (searchTerm?: string) => {
 		try {
@@ -40,9 +40,9 @@ export default function HomeScreen() {
 	}, [search])
 
 	const onHandleFavorite = (job: DetailJob) => {
-		const isFavorite = job.isFavorite
-		const newJob = { ...job, isFavorite: !isFavorite }
+		const newJob = { ...job, isFavorite: !job.isFavorite }
 		setFavorite(newJob)
+		toggleFavorite(job.id)
 	}
 
 	const ListHeader = () => (
