@@ -3,6 +3,7 @@ import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { StatusBar } from 'expo-status-bar'
 import { useEffect } from 'react'
+import { Platform } from 'react-native'
 import 'react-native-reanimated'
 
 export {
@@ -50,6 +51,15 @@ function RootLayoutNav() {
 		<Stack>
 			<StatusBar style="auto" />
 			<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+			<Stack.Screen
+				name="detail/[id]"
+				options={{
+					title: 'Job detail',
+					animation: 'fade',
+					headerBackTitle: Platform.OS === 'ios' ? 'Atrás' : '',
+					headerShadowVisible: false,
+				}}
+			/>
 		</Stack>
 	)
 }
