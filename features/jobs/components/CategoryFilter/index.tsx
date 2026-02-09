@@ -15,11 +15,8 @@ export default function CategoryFilter({
 	const { categories } = useJobStore()
 
 	const handlePress = (slug: string) => {
-		if (selectedCategory === slug) {
-			onSelectCategory(null) // Clear filter
-		} else {
-			onSelectCategory(slug) // Apply filter
-		}
+		if (selectedCategory === slug) onSelectCategory(null)
+		else onSelectCategory(slug)
 	}
 
 	return (
