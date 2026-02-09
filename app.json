@@ -1,46 +1,41 @@
 {
-  "expo": {
-    "name": "Prueba RN OCC",
-    "slug": "prueba-rn-occ",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "pruebarnocc",
-    "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "splash": {
-      "image": "./assets/images/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffad00"
-    },
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.efrencodes.pruebarnocc"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false,
-      "package": "com.efrencodes.pruebarnocc"
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
-    },
-    "plugins": [
-      "expo-router"
-    ],
-    "experiments": {
-      "typedRoutes": true
-    },
-    "platforms": [
-      "android",
-      "ios"
-    ],
-    "githubUrl": "https://github.com/efrencodes/app-mobile-es-map"
-  }
+	"expo": {
+		"name": "Prueba RN",
+		"slug": "prueba-rn",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "./assets/images/icon.png",
+		"scheme": "pruebarn",
+		"userInterfaceStyle": "automatic",
+		"newArchEnabled": true,
+		"splash": {
+			"image": "https://res.cloudinary.com/dtstx7rhx/image/upload/v1770595669/SplashScreen.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#ffad00"
+		},
+		"ios": {
+			"supportsTablet": true,
+			"bundleIdentifier": "com.pruebarn.pruebarn"
+		},
+		"android": {
+			"adaptiveIcon": {
+				"foregroundImage": "https://res.cloudinary.com/dtstx7rhx/image/upload/v1770595669/SplashScreen.png",
+				"backgroundColor": "#ffffff"
+			},
+			"edgeToEdgeEnabled": true,
+			"predictiveBackGestureEnabled": false,
+			"package": "com.pruebarn.pruebarn"
+		},
+		"web": {
+			"bundler": "metro",
+			"output": "static",
+			"favicon": "./assets/images/favicon.png"
+		},
+		"plugins": ["expo-router"],
+		"experiments": {
+			"typedRoutes": true
+		},
+		"platforms": ["android", "ios"],
+		"githubUrl": "https://github.com/efrencodes/prueba-rn-occ"
+	}
 }
