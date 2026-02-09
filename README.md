@@ -4,6 +4,8 @@ Aplicacion mobile para buscar trabajos remotos usando la API de Remotive.
 
 ## Demo
 
+![Home Screen](docs/homescreen.png)
+
 ## Tech Stack
 
 - **Framework:** Expo v54 con React Native 0.81
