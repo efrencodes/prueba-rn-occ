@@ -1,9 +1,10 @@
-export type JobType =
-	| 'full_time'
-	| 'contract'
-	| 'part_time'
-	| 'freelance'
-	| 'internship'
+export type JobType = 'full_time' | 'contract' | 'part_time' | 'freelance'
+
+export interface Category {
+	id: number
+	name: string
+	slug: string
+}
 
 export interface DetailJob {
 	id: number
