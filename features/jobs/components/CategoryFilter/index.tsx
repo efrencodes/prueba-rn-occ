@@ -1,62 +1,36 @@
 import Colors from '@/constants/Colors'
-import { JobType } from '@/features/jobs/type'
+import useJobStore from '@/features/jobs/store/useJobStore'
 import { Ionicons } from '@expo/vector-icons'
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 
-interface JobTypeFilterProps {
-	selectedType: JobType | null
-	onSelectType: (type: JobType | null) => void
+interface CategoryFilterProps {
+	selectedCategory: string | null
+	onSelectCategory: (slug: string | null) => void
 }
 
-export default function JobTypeFilter({
-	selectedType,
-	onSelectType,
-}: JobTypeFilterProps) {
-	const jobTypes: Array<{
-		value: JobType
-		label: string
-		icon: keyof typeof Ionicons.glyphMap
-		color: string
-	}> = [
-		{
-			value: 'full_time',
-			label: 'Full Time',
-			icon: 'briefcase',
-			color: '#2563eb',
-		},
-		{
-			value: 'part_time',
-			label: 'Part Time',
-			icon: 'time',
-			color: '#7c3aed',
-		},
-		{
-			value: 'contract',
-			label: 'Contract',
-			icon: 'document-text',
-			color: '#ea580c',
-		},
-		{
-			value: 'freelance',
-			label: 'Freelance',
-			icon: 'laptop',
-			color: '#059669',
-		},
-	]
+export default function CategoryFilter({
+	selectedCategory,
+	onSelectCategory,
+}: CategoryFilterProps) {
+	const { categories } = useJobStore()
 
-	const handlePress = (type: JobType) => {
-		if (selectedType === type) onSelectType(null)
-		else onSelectType(type)
+	const handlePress = (slug: string) => {
+		if (selectedCategory === slug) {
+			onSelectCategory(null) // Clear filter
+		} else {
+			onSelectCategory(slug) // Apply filter
+		}
 	}
 
 	return (
 		<View style={styles.container}>
 			<View style={styles.header}>
-				<Ionicons name="filter" size={16} color="#666" />
-				<Text style={styles.headerText}>Job Type</Text>
-				{selectedType && (
+				<Ionicons name="apps" size={16} color="#666" />
+				<Text style={styles.headerText}>Category</Text>
+
+				{selectedCategory && (
 					<Pressable
-						onPress={() => onSelectType(null)}
+						onPress={() => onSelectCategory(null)}
 						style={({ pressed }) => [
 							styles.clearButton,
 							pressed && { opacity: 0.5 },
@@ -67,44 +41,35 @@ export default function JobTypeFilter({
 					</Pressable>
 				)}
 			</View>
-
 			<ScrollView
 				horizontal
 				showsHorizontalScrollIndicator={false}
 				contentContainerStyle={styles.scrollContent}
 			>
-				{jobTypes.map((jobType) => {
-					const isSelected = selectedType === jobType.value
+				{categories.map((category) => {
+					const isSelected = selectedCategory === category.slug
 
 					return (
 						<Pressable
-							key={jobType.value}
-							onPress={() => handlePress(jobType.value)}
+							key={category.id}
+							onPress={() => handlePress(category.slug)}
 							style={({ pressed }) => [
 								styles.chip,
-								isSelected && {
-									backgroundColor: jobType.color,
-									borderColor: jobType.color,
-								},
+								isSelected && styles.chipSelected,
 								pressed && styles.chipPressed,
 							]}
 							accessibilityRole="button"
-							accessibilityLabel={`Filter by ${jobType.label}`}
+							accessibilityLabel={`Filter by ${category.name}`}
 							accessibilityState={{ selected: isSelected }}
 						>
-							<Ionicons
-								name={jobType.icon}
-								size={18}
-								color={isSelected ? '#fff' : '#666'}
-							/>
-
 							<Text
 								style={[
 									styles.chipText,
 									isSelected && styles.chipTextSelected,
 								]}
+								numberOfLines={1}
 							>
-								{jobType.label}
+								{category.name}
 							</Text>
 
 							{isSelected && (
@@ -134,43 +99,12 @@ const styles = StyleSheet.create({
 		marginBottom: 12,
 	},
 	headerText: {
+		flex: 1,
 		fontSize: 14,
 		fontWeight: '600',
 		color: '#666',
 		textTransform: 'uppercase',
 		letterSpacing: 0.5,
-	},
-	scrollContent: {
-		paddingHorizontal: 16,
-		gap: 8,
-	},
-	chip: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		gap: 6,
-		paddingHorizontal: 16,
-		paddingVertical: 10,
-		borderRadius: 20,
-		backgroundColor: '#f5f5f5',
-		borderWidth: 1.5,
-		borderColor: '#e0e0e0',
-		shadowColor: '#000',
-		shadowOffset: { width: 0, height: 1 },
-		shadowOpacity: 0.05,
-		shadowRadius: 2,
-		elevation: 1,
-	},
-	chipPressed: {
-		opacity: 0.7,
-		transform: [{ scale: 0.97 }],
-	},
-	chipText: {
-		fontSize: 14,
-		fontWeight: '600',
-		color: '#666',
-	},
-	chipTextSelected: {
-		color: '#fff',
 	},
 	clearButton: {
 		paddingHorizontal: 8,
@@ -180,5 +114,46 @@ const styles = StyleSheet.create({
 		fontSize: 13,
 		fontWeight: '600',
 		color: Colors.light.tint,
+	},
+	scrollContent: {
+		paddingHorizontal: 16,
+		gap: 8,
+	},
+	chip: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		gap: 6,
+		paddingHorizontal: 12,
+		paddingVertical: 8,
+		borderRadius: 20,
+		backgroundColor: '#f5f5f5',
+		borderWidth: 1.5,
+		borderColor: '#e0e0e0',
+		maxWidth: 200, // Previene overflow en nombres largos
+		shadowColor: '#000',
+		shadowOffset: { width: 0, height: 1 },
+		shadowOpacity: 0.05,
+		shadowRadius: 2,
+		elevation: 1,
+	},
+	chipSelected: {
+		backgroundColor: Colors.light.tint,
+		borderColor: Colors.light.tint,
+	},
+	chipPressed: {
+		opacity: 0.7,
+		transform: [{ scale: 0.97 }],
+	},
+	emoji: {
+		fontSize: 16,
+	},
+	chipText: {
+		fontSize: 13,
+		fontWeight: '600',
+		color: '#666',
+		flexShrink: 1, // Permite que el texto se ajuste
+	},
+	chipTextSelected: {
+		color: '#fff',
 	},
 })
